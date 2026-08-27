@@ -59,10 +59,10 @@ Every comparison eliminates half of the remaining elements, since we know which 
 ## Visual Explanation
 
 ```text
-nums = [-1, 0, 3, 5, 9, 12], target = 9
-index:    0  1  2  3  4  5
- L        M              R    -> mid=2, nums[mid]=3 < 9, move right (left=mid+1)
-             L     M      R    -> mid=4, nums[mid]=9 == target, found!
+nums =  [-1,  0,  3,  5,  9, 12], target = 9
+index:    0   1   2   3   4   5
+          L       M           R    -> mid=2, nums[mid]=3 < 9, search right half (left=mid+1)
+                      L   M   R    -> mid=4, nums[mid]=9 == target, found!
 ```
 
 ## Optimal Solution
