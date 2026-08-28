@@ -1,0 +1,67 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getSections } from '../../lib/problems';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const sections = await getSections();
+  return sections.map((section) => ({
+    params: { section: section.sectionSlug },
+    props: { section },
+  }));
+}
+
+const { section } = Astro.props;
+---
+
+<Layout title={section.sectionName}>
+  <a class="back" href={url('/')}>&larr; All sections</a>
+  <h1>{section.sectionName}</h1>
+  <ol class="list">
+    {
+      section.problems.map((problem) => (
+        <li>
+          <a href={url(`/${section.sectionSlug}/${problem.fileSlug}/`)}>{problem.title}</a>
+        </li>
+      ))
+    }
+  </ol>
+</Layout>
+
+<style>
+  .back {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    margin: 0.75rem 0 1.5rem;
+  }
+
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .list li {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-elevated);
+  }
+
+  .list a {
+    display: block;
+    padding: 0.85rem 1.1rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .list a:hover {
+    text-decoration: none;
+    color: var(--accent);
+  }
+</style>

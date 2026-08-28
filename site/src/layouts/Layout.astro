@@ -1,0 +1,189 @@
+---
+import MermaidRuntime from '../components/MermaidRuntime.astro';
+import { url } from '../lib/url';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'A guided walkthrough of the NeetCode 150.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} · NeetCode 150 Guide</title>
+    <MermaidRuntime />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href={url('/')}>NeetCode 150</a>
+      <nav>
+        <a href={url('/')}>Sections</a>
+        <a href={url('/contributing/')}>Contribute</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>150 problems, 18 patterns, one guide.</p>
+      <p>
+        <a href="https://github.com/bhali16/" target="_blank" rel="noopener noreferrer"
+          >github.com/bhali16</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #0b0d12;
+    --bg-elevated: #12151d;
+    --border: #232838;
+    --text: #e7e9ee;
+    --text-dim: #9aa1b2;
+    --accent: #7c9eff;
+    --accent-soft: #263255;
+    --radius: 12px;
+    --max-width: 960px;
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(11, 13, 18, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10;
+  }
+
+  .site-header .brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .site-header nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .site-header nav a {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+  }
+
+  main {
+    flex: 1;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+
+  .site-footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .site-footer p {
+    margin: 0.35rem 0;
+  }
+
+  .site-footer a {
+    color: var(--text-dim);
+  }
+
+  .site-footer a:hover {
+    color: var(--accent);
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+  }
+
+  pre {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.9em;
+  }
+
+  :not(pre) > code {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1em 0.4em;
+  }
+
+  pre.mermaid {
+    background: var(--bg-elevated);
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  pre.mermaid svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 0;
+    padding: 0.25rem 1rem;
+    color: var(--text-dim);
+  }
+</style>

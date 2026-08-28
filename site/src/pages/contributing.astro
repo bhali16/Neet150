@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const repoUrl = 'https://github.com/bhali16/Neet150';
+---
+
+<Layout
+  title="Contributing"
+  description="How to report issues and contribute solutions to the NeetCode 150 guide."
+>
+  <h1>Contributing</h1>
+  <p class="lede">
+    This guide gets better when more people poke holes in it and add to it. Found a mistake in an
+    explanation, a bug in a diagram, or want to add a solution in another language? Here's how.
+  </p>
+
+  <section>
+    <h2>Report an issue</h2>
+    <p>
+      If something looks wrong — an incorrect trace, a typo, a diagram that doesn't match the
+      worked example, or an explanation that's unclear — please
+      <a href={`${repoUrl}/issues/new`} target="_blank" rel="noopener noreferrer">open an issue</a
+      >. Include:
+    </p>
+    <ul>
+      <li>The problem name and section (e.g. "11-graphs / 85-rotting-oranges")</li>
+      <li>What's wrong, as specifically as you can</li>
+      <li>What you'd expect instead, if you know</li>
+    </ul>
+    <p>
+      No issue is too small. A one-line typo report is just as welcome as a correctness bug.
+    </p>
+  </section>
+
+  <section>
+    <h2>Submit a more optimal solution</h2>
+    <p>
+      Each problem currently ships one worked solution in Python. If you have a cleaner or more
+      optimal approach — or a different time/space tradeoff worth showing — open a pull request
+      adding it alongside the existing solution rather than replacing it, so readers can compare
+      approaches.
+    </p>
+  </section>
+
+  <section>
+    <h2>Add TypeScript or Java solutions</h2>
+    <p>
+      Every problem currently only has a Python solution. Solutions in <strong>TypeScript</strong>
+      and <strong>Java</strong> are especially welcome — pick any problem file under a section
+      directory (e.g. <code>11-graphs/85-rotting-oranges.md</code>) and add a new fenced code
+      block under <code>## Optimal Solution</code>, labeled with the language, right after the
+      existing Python one:
+    </p>
+    <pre><code>```typescript
+function orangesRotting(grid: number[][]): number {"{"}
+  // ...
+{"}"}
+```</code></pre>
+    <p>Keep the same correctness and complexity as the existing solution — just a different language.</p>
+  </section>
+
+  <section>
+    <h2>Ground rules</h2>
+    <ul>
+      <li>Verify your fix or addition against the example(s) already in the file before submitting.</li>
+      <li>Don't change the problem numbering, section structure, or existing examples.</li>
+      <li>Keep explanations beginner-friendly — that's the whole point of this guide.</li>
+      <li>One problem/fix per pull request keeps review simple.</li>
+    </ul>
+  </section>
+
+  <p class="cta">
+    <a href={repoUrl} target="_blank" rel="noopener noreferrer">View the repository on GitHub &rarr;</a>
+  </p>
+</Layout>
+
+<style>
+  h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .lede {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 42rem;
+  }
+
+  section {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  section h2 {
+    margin-top: 0;
+  }
+
+  ul {
+    padding-left: 1.25rem;
+  }
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  .cta {
+    margin-top: 3rem;
+    font-weight: 600;
+  }
+</style>

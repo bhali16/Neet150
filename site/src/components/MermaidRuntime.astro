@@ -1,0 +1,15 @@
+---
+---
+<script>
+  import mermaid from 'mermaid';
+
+  mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'strict' });
+
+  function renderDiagrams() {
+    const nodes = document.querySelectorAll('pre.mermaid');
+    if (nodes.length) mermaid.run({ nodes });
+  }
+
+  renderDiagrams();
+  document.addEventListener('astro:page-load', renderDiagrams);
+</script>

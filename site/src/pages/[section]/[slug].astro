@@ -1,0 +1,73 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getAllProblems } from '../../lib/problems';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const problems = await getAllProblems();
+  return problems.map((problem, index) => ({
+    params: { section: problem.sectionSlug, slug: problem.fileSlug },
+    props: { problem, prev: problems[index - 1], next: problems[index + 1] },
+  }));
+}
+
+const { problem, prev, next } = Astro.props;
+const { Content } = await render(problem.entry);
+---
+
+<Layout title={problem.title}>
+  <a class="back" href={url(`/${problem.sectionSlug}/`)}>&larr; {problem.sectionName}</a>
+  <article class="prose">
+    <Content />
+  </article>
+  <nav class="pager">
+    {
+      prev ? (
+        <a href={url(`/${prev.sectionSlug}/${prev.fileSlug}/`)}>&larr; {prev.title}</a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      next ? (
+        <a href={url(`/${next.sectionSlug}/${next.fileSlug}/`)}>{next.title} &rarr;</a>
+      ) : (
+        <span />
+      )
+    }
+  </nav>
+</Layout>
+
+<style>
+  .back {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .prose {
+    margin-top: 1.25rem;
+  }
+
+  .prose :global(h1) {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose :global(h2) {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 1.35rem;
+  }
+
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+</style>

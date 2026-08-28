@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSections } from '../lib/problems';
+import { url } from '../lib/url';
+
+const sections = await getSections();
+const totalProblems = sections.reduce((sum, s) => sum + s.problems.length, 0);
+---
+
+<Layout title="Home">
+  <section class="hero">
+    <h1>The NeetCode 150, explained.</h1>
+    <p>
+      {totalProblems} problems across {sections.length} core patterns — each one broken down
+      with a worked example, a visual trace, and the optimal solution.
+    </p>
+  </section>
+
+  <section class="grid">
+    {
+      sections.map((section) => (
+        <a class="card" href={url(`/${section.sectionSlug}/`)}>
+          <span class="card-number">{String(section.sectionOrder).padStart(2, '0')}</span>
+          <span class="card-title">{section.sectionName}</span>
+          <span class="card-count">{section.problems.length} problems</span>
+        </a>
+      ))
+    }
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 3rem 0 4rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+  }
+
+  .hero p {
+    color: var(--text-dim);
+    max-width: 40rem;
+    margin: 0 auto;
+    font-size: 1.05rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-elevated);
+    transition:
+      transform 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    text-decoration: none;
+  }
+
+  .card-number {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .card-count {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+</style>

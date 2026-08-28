@@ -1,0 +1,74 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - '01-arrays-hashing/**'
+      - '02-two-pointers/**'
+      - '03-sliding-window/**'
+      - '04-stack/**'
+      - '05-binary-search/**'
+      - '06-linked-list/**'
+      - '07-trees/**'
+      - '08-tries/**'
+      - '09-heap-priority-queue/**'
+      - '10-backtracking/**'
+      - '11-graphs/**'
+      - '12-advanced-graphs/**'
+      - '13-1d-dynamic-programming/**'
+      - '14-2d-dynamic-programming/**'
+      - '15-greedy/**'
+      - '16-intervals/**'
+      - '17-math-geometry/**'
+      - '18-bit-manipulation/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Build
+        working-directory: site
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
